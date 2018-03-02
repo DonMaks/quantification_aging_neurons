@@ -1,3 +1,6 @@
+'''Calculate the kink density allong a mainbranch and the kink density in windows around neuriteoutgrowths.
+Test for github.'''
+
 import utility
 import numpy as np
 
