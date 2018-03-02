@@ -19,7 +19,6 @@ infolder = 'traces/'
 infolder_tif = 'images/'
 
 
-
 outfolder_cleanedtrees = 'cleanedtrees/'
 outfolder_classifiedtrees = 'classifiedtrees/'
 outfolder_mainbranch = 'mainbranches/'

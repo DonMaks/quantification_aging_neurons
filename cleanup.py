@@ -45,11 +45,11 @@ def traceBranch(endpoint, tree, main_nodes=[], soma_nodes=[], scale=(1,1,1)):
     return branch_array, length
     
 
-def cleanup(infilename='data/trees/tree_PLM_raw.swc',
-            outfilename='data/trees/cleaned_tree.swc',
+def cleanup(infilename='data/trees/plm2.swc',
+            outfilename='data/trees/plm2_clean.swc',
             neurontype='PLM',
             scale=(0.223, 0.223, 0.3),
-            visualize=False):
+            visualize=True):
     
     tree = utility.readSWC(infilename)
     endpoints = utility.findEndpoints(tree)
@@ -108,8 +108,8 @@ def cleanup(infilename='data/trees/tree_PLM_raw.swc',
             axes[0].plot(min_distance_from_mainbranch)
         all_distances.append(min_distance_from_mainbranch)
         
-        out = []
         n = 4
+        out = np.zeros(n).tolist()
         x = np.arange(n)
         for i in range(len(min_distance_from_mainbranch)-n):
             data = min_distance_from_mainbranch[i:i+n]
@@ -120,17 +120,25 @@ def cleanup(infilename='data/trees/tree_PLM_raw.swc',
             if slope > 0.05:
                 pass
             out.append(slope)
+        
         if visualize:
             axes[1].plot(out, '.')
+        #out.insert(0, np.zeros(n).tolist())
         all_slopes.append(out)
+        
     
     if visualize:    
         plt.show()
     
+    
+    
     start_node_index = np.zeros(len(all_slopes))
     for i in range(len(all_slopes)):
-        if len(all_slopes[i])>0:
-            start_node_index[i] = len(all_slopes[i])+2
+        if len(all_slopes[i])==len(all_distances[i]):
+            for j in range(len(all_slopes[i])):
+                if all_slopes[i][j] > 0.02 or all_distances[i][j] > 0.5:
+                    start_node_index[i] = j
+                    break
     
     
     for i in range(len(start_node_index)):

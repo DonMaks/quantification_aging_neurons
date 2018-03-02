@@ -49,12 +49,13 @@ def traceBranch(endpoint, tree, main_nodes=[], soma_nodes=[], scale=(1,1,1)):
     return branch_array, length
 
 
-def classify(infilename='data/trees/plm.swc',
+def classify(infilename='data/trees/plm2_clean.swc',
              outfilename_tree='data/trees/plm_classified.swc',
              outfilename_mainbranch='data/trees/mainbranch.swc',
              neurontype='PLM',
              length_threshold=3,
-             scale=(0.223, 0.223, 0.3)):
+             scale=(0.223, 0.223, 0.3),
+             debug=False):
 
     tree = utility.readSWC(infilename)
     tree = utility.removeDoubleNodes(tree)
@@ -141,6 +142,7 @@ def classify(infilename='data/trees/plm.swc',
     tree_mean_radii = []
     tree_max_radii = []
     tree_orders = []
+    side_trees_clean = []
     
     for i in range(len(side_trees_array)):
         tree_length = utility.calculateDistancesTree(side_trees[i], scale=scale, return_sum=True)
@@ -154,24 +156,36 @@ def classify(infilename='data/trees/plm.swc',
             tree_mean_radii.append(tree_mean_radius)
             tree_max_radii.append(tree_max_radius)
             if root in pmv_nodes:
-                side_trees_array[i][:,1]=6
+                side_trees_array[i][:,1] = 6
                 side_category[i] = 6
                 tree_classes.append('PMV')
                 
+                
             elif root in soma_nodes:
-                side_trees_array[i][:,1]=3
+                side_trees_array[i][:,1] = 3
                 side_category[i] = 3
                 tree_classes.append('SomaOutgrowth')
             
             #elif root in main_nodes and side_trees_array[i][:,5].max()>3:
                 #side_trees_array[i][:,1]=5
-                #side_category[i] = 5        
+                #side_category[i] = 5
+            elif root in main_nodes and side_trees_array[i][:,5].mean() > 2 and tree_length < 5:
+                side_trees_array[i][:,1] = 5
+                side_category[i] = 5
+                tree_classes.append('Blob')                
         
             elif root in main_nodes:
-                side_trees_array[i][:,1]=2
+                side_trees_array[i][:,1] = 2
                 side_category[i] = 2
                 tree_classes.append('NeuriteOutgrowth')
                 annotated_mainbranch[np.argwhere(annotated_mainbranch[:,0]==root[0])[0][0], 1] = 1
+            
+            else:
+                side_trees_array[i][:,1] = 9
+                side_category[i] = 9
+                tree_classes.append('Unknown')                
+                
+            side_trees_clean.append(side_trees_array[i])
     
     
     
@@ -189,7 +203,7 @@ def classify(infilename='data/trees/plm.swc',
     soma_nodes = soma_nodes.tolist()
     for node in main_nodes:
         full_classified_tree.append(node)
-    for tree in side_trees_array:
+    for tree in side_trees_clean:
         for node in tree:
             full_classified_tree.append(node.tolist())
     for node in soma_nodes:
@@ -202,8 +216,13 @@ def classify(infilename='data/trees/plm.swc',
     tree_classes.append('MainBranch')
     tree_mean_radii.append(mainbranch[:,5].mean())
     tree_max_radii.append(mainbranch[:,5].max())
+    if debug:
+        for i in range(len(tree_lengths)):
+            
+            print('Class: {0:16}    Length: {1:>6.2f}    Max_r: {2:>4.2f}    Mean_r: {3:>4.2f}'.format(tree_classes[i], tree_lengths[i], tree_max_radii[i], tree_mean_radii[i]))
+            
     return tree_lengths, tree_classes, tree_mean_radii, tree_max_radii, mainbranch, annotated_mainbranch
 
 
 if __name__ == '__main__':
-    classify()
+    classify(debug=True)
