@@ -49,13 +49,15 @@ def traceBranch(endpoint, tree, main_nodes=[], soma_nodes=[], scale=(1,1,1)):
     return branch_array, length
 
 
-def classify(infilename='data/trees/plm2_clean.swc',
+def classify(infilename='data/trees/plm.swc',
              outfilename_tree='data/trees/plm_classified.swc',
              outfilename_mainbranch='data/trees/mainbranch.swc',
              neurontype='PLM',
              length_threshold=3,
              scale=(0.223, 0.223, 0.3),
              debug=False):
+    '''
+    '''
 
     tree = utility.readSWC(infilename)
     tree = utility.removeDoubleNodes(tree)

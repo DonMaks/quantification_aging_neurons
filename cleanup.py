@@ -45,8 +45,8 @@ def traceBranch(endpoint, tree, main_nodes=[], soma_nodes=[], scale=(1,1,1)):
     return branch_array, length
     
 
-def cleanup(infilename='data/trees/plm2.swc',
-            outfilename='data/trees/plm2_clean.swc',
+def cleanup(infilename='data/trees/plm.swc',
+            outfilename='data/trees/plm_clean.swc',
             neurontype='PLM',
             scale=(0.223, 0.223, 0.3),
             visualize=True):
