@@ -17,7 +17,7 @@ window_size_linear_regression = 5.0
 window_size_maximum_supression = 5.0
 neurontypes = ['PLM', 'ALM']
 visualize_somavolumes = False
-root = 'D:/data/'
+root = './data/'
 infolder = 'traces/'
 infolder_tif = 'images/'
 
