@@ -11,14 +11,14 @@ def calculate3DSigma(sigma, scale=(1,1,1)):
     norm_reci_scale = reci_scale/reci_scale[0]
     return list(norm_reci_scale*sigma)
 
-folder = 'D:/data/PLM/images_raw/'
-outfolder = 'D:/data/PLM/images/'
+folder = 'D:/testdata_wavyness/PLM/images_raw/'
+outfolder = 'D:/testdata_wavyness/PLM/images/'
 #folder = 'E:/images/PLM/images_raw/'
 #outfolder = 'E:/images/PLM/images/'
 if not os.path.exists(outfolder):
     os.makedirs(outfolder)
 filenames = os.listdir(folder)
-filenames = [filename for filename in filenames if filename.find('.tif') > -1]
+filenames = [filename for filename in filenames if filename.endswith('.tif')]
 scale = (0.223, 0.223, 0.3)
 sigmas = [0.7]
 s = calculate3DSigma(sigmas[0], scale=scale)

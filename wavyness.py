@@ -19,7 +19,7 @@ def findWindow(node, branch, window_size=4, scale=(0.22, 0.22, 0.3)):
         parent_nodes.append(current_parent_node)
         next_parent_node = utility.nextNode(current_parent_node, branch).tolist()
         if not isinstance(next_parent_node, list):
-            print('not enough parent nodes!')
+            #print('not enough parent nodes!')
             break
         parent_distance += utility.dist3D(current_parent_node, next_parent_node, scale=scale)
         current_parent_node = next_parent_node
@@ -30,7 +30,7 @@ def findWindow(node, branch, window_size=4, scale=(0.22, 0.22, 0.3)):
         if not next_child_node == []:
             next_child_node = next_child_node[0]
         if not isinstance(next_child_node, list):
-            print('not enough child nodes!')
+            #print('not enough child nodes!')
             break
         child_distance += utility.dist3D(current_child_node, next_child_node, scale=scale)
         current_child_node = next_child_node

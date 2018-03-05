@@ -4,10 +4,11 @@ from skimage import io
 import os
 
 
-directory = 'D:\\data\\PLM\\'
+directory = 'D:\\testdata_wavyness\\PLM\\'
 imagefolder = directory + 'images\\'
 markerfolder = directory + 'marker\\'
 files = os.listdir(imagefolder)
+files = [file for file in files if file.endswith('.tif')]
 if not os.path.exists(markerfolder):
     os.makedirs(markerfolder)
     

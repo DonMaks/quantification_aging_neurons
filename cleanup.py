@@ -89,7 +89,6 @@ def cleanup(infilename='data/trees/plm2.swc',
     clean_side_branches = []
     windows = []
     for side_branch in side_branches:
-        print('***START****')
         root = utility.findRoots(side_branch, return_node=True)[0]
         if root.tolist() in soma_nodes:
             window = [root] #set the searching window to the root node in case of alm soma_outgrowth side_branch.

@@ -253,10 +253,10 @@ def findWindow(node, branch, window_size=4, scale=(1,1,1)):
         try:
             next_child_node = prevNode(current_child_node, branch).tolist()[0]
         except IndexError:
-            print('not enough child nodes!')
+            #print('not enough child nodes!')
             break            
         if not isinstance(next_child_node, list):
-            print('not enough child nodes!')
+            #print('not enough child nodes!')
             break              
         child_distance += dist3D(current_child_node, next_child_node, scale=scale)
         current_child_node = next_child_node
