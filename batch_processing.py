@@ -1,7 +1,7 @@
 import cleanup
 import classify
 import wavyness
-import somavolume_multipleseeds
+import somavolume
 import correlation
 import os
 import datetime
@@ -129,7 +129,7 @@ for neurontype in neurontypes:
             scale=scale)
         
         if neurontype=='ALM':
-            soma_volume = somavolume_multipleseeds.somavolume(filename_swc=n_outfolder_classifiedtrees+file,
+            soma_volume = somavolume.somavolume(filename_swc=n_outfolder_classifiedtrees+file,
                                                 filename_tif=n_infolder_tif+file_tif,
                                                 scale=scale,
                                                 visualize=visualize_somavolumes,
